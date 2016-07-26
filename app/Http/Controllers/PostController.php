@@ -15,4 +15,11 @@ class PostController extends Controller
         $discussions = Discussion::all();
         return view('forum.index',compact('discussions'));
     }
+
+    public function show($id){
+
+        $discussion = Discussion::findOrFail($id);
+        return view('forum.show',compact('discussion'));
+    }
 }
+

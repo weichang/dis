@@ -13,3 +13,4 @@
 
 
 Route::get('/','PostController@index');
+Route::resource('discussions','PostController');
