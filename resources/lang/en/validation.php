@@ -92,8 +92,17 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'name' => [
+            'required' => '請填寫用戶名',
+        ],
+        'email' => [
+            'required' => '請填寫信箱',
+        ],
+        'password' => [
+            'required' => '請填寫密碼',
+        ],
+        'password_confirmation' => [
+            'required' => '請填寫密碼確認',
         ],
     ],
 
