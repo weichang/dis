@@ -15,4 +15,5 @@
 Route::get('/','PostController@index');
 Route::resource('discussions','PostController');
 Route::get('/users/register','UsersController@register');
+Route::get('/verfiy/{confirm_code}','UsersController@confirmEmail');
 Route::post('/users/register','UsersController@store');
