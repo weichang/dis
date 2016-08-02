@@ -26,6 +26,7 @@
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check())
                     <li><a href="#">{{ Auth::user()->name }}</a></li>
+                    <li><a href="/users/logout">登出</a></li>
                 @else
                 <li><a href="/users/login">登入</a></li>
                 <li><a href="/users/register">註冊</a></li>

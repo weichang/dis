@@ -55,6 +55,13 @@ class UsersController extends Controller
         return view('users.login');
 
     }
+    public function logout()
+    {
+        \Auth::logout();
+        return redirect('/');
+    }
+
+
     public function signin(Requests\UserLoginRequest $request)
     {
 
