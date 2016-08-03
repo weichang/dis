@@ -3,7 +3,7 @@
     <div class="jumbotron">
         <div class="container">
             <h2>Discussion
-               <a class="btn btn-primary btn-lg pull-right" href="/discussions/create" role="button">發佈 »</a>
+               <a class="btn btn-danger btn-lg pull-right" href="/discussions/create" role="button">發佈文章 »</a>
             </h2>
         </div>
     </div>
@@ -19,6 +19,12 @@
                         </div>
 
                     <div class="media-body">
+                        <div class="media-conversation-meta">
+                        <span class="media-conversation-replies">
+                        <a href="/discussion/154#reply">{{ count($discussion->comments) }}</a>
+                        回復
+                        </span>
+                        </div>
                         <h4 class="media-heading"><a href="/discussions/{{  $discussion->id }}"> {{ $discussion->title }}</a></h4>
                         {{ $discussion->user->name }}
                     </div>

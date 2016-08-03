@@ -15,7 +15,7 @@
                         <div class="media-body">
                             <h4 class="media-heading">{{ $discussion->title }}</h4>
                             @if(Auth::check() && Auth::user()->id == $discussion->user_id )
-                            <a class="btn btn-primary btn-lg pull-right" href="/discussions/{{$discussion->id}}/edit" role="button">編輯</a>
+                            <a class="btn btn-danger btn-lg pull-right" href="/discussions/{{$discussion->id}}/edit" role="button">編輯</a>
                             @endif
                             {{ $discussion->user->name }}
                         </div>

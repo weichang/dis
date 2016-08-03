@@ -3,34 +3,39 @@
     <meta charset="UTF-8">
     <title>論壇</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">論壇</a>
+
+            <a class="navbar-brand" href="/">論壇</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/">首頁</a></li>
+
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check())
-                    <li>
-                     <a href="#">
-                        <img class="media-object img-circle" src="{{ Auth::user()->avatar }}" alt="32x32" style="width: 32px;height: 32px"/>
-                    </a>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">更換頭像</a></li>
+                            <li><a href="#">更換密码</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li> <a href="/users/logout">登出</a></li>
+                        </ul>
                     </li>
-                    <li><a href="#">{{ Auth::user()->name }}</a></li>
-                    <li><a href="/users/logout">登出</a></li>
+
+                    <li>
+                        <a href="#"><img class="media-object img-circle" src="{{ Auth::user()->avatar }}" alt="32x32" style="width: 32px;height: 32px"/> </a>
+
+                    </li>
+
                 @else
                 <li><a href="/users/login">登入</a></li>
                 <li><a href="/users/register">註冊</a></li>
@@ -41,5 +46,9 @@
 </nav>
 
 @yield('content')
+<script src="https://code.jquery.com/jquery-3.1.0.slim.min.js"   integrity="sha256-cRpWjoSOw5KcyIOaZNo4i6fZ9tKPhYYb6i5T9RSVJG8="   crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
 </body>
 </html>
