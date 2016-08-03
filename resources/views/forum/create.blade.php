@@ -13,6 +13,7 @@
                 @endif
              {!! Form::open(['url'=>'/discussions']) !!}
                @include('forum.form')
+             {!! Form::submit('發表',['class'=>'btn btn-success form-control']) !!}
              {!! Form::close() !!}
             </div>
         </div>

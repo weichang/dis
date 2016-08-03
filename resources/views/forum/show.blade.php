@@ -48,6 +48,16 @@
                         </div>
                     </div>
                 @endforeach
+                <hr>
+                @if(Auth::check())
+                {!! Form::open(['url'=>'/comment']) !!}
+                    {!! Form::hidden('discussion_id',$discussion->id) !!}
+                    {!! Form::textarea('body',null,['class' => 'form-control']) !!}
+                    {!! Form::submit('發表評論',['class'=>'btn btn-success pull-right']) !!}
+                {!! Form::close() !!}
+                @else
+                    <a href="/users/login" class="btn btn-block btn-success">登入參與評論 </a>
+                @endif
             </div>
         </div>
 
