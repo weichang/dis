@@ -98,6 +98,12 @@ return [
         'email' => [
             'required' => '請填寫信箱',
         ],
+        'title' => [
+            'required' => '請填寫文章標題',
+        ],
+        'body' => [
+            'required' => '請填寫文章內容',
+        ],
         'password' => [
             'required' => '請填寫密碼',
         ],

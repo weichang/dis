@@ -3,7 +3,7 @@
     <div class="jumbotron">
         <div class="container">
             <h2>Discussion
-               <a class="btn btn-primary btn-lg pull-right" href="#" role="button">發佈 »</a>
+               <a class="btn btn-primary btn-lg pull-right" href="/discussions/create" role="button">發佈 »</a>
             </h2>
         </div>
     </div>

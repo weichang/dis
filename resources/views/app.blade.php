@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
         <div class="navbar-header">
@@ -20,11 +19,16 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">首頁</a></li>
+                <li class="active"><a href="/">首頁</a></li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check())
+                    <li>
+                     <a href="#">
+                        <img class="media-object img-circle" src="{{ Auth::user()->avatar }}" alt="32x32" style="width: 32px;height: 32px"/>
+                    </a>
+                    </li>
                     <li><a href="#">{{ Auth::user()->name }}</a></li>
                     <li><a href="/users/logout">登出</a></li>
                 @else
