@@ -20,7 +20,7 @@ class PostController extends Controller
 
     public function index(){
 
-        $discussions = Discussion::all();
+        $discussions = Discussion::all()->sortByDesc('id');
         return view('forum.index',compact('discussions'));
     }
 
@@ -30,9 +30,27 @@ class PostController extends Controller
         $html = $this->markdown->markdown($discussion->body);
         return view('forum.show',compact('discussion', 'html'));
     }
+
     public  function create()
     {
         return view('forum.create');
+    }
+
+    public function edit($id)
+    {
+        $discussion = Discussion::findOrFail($id);
+        if(\Auth::user()->id !== $discussion->user_id){
+            return redirect('/');
+        }
+        return view('forum.edit',compact('discussion'));
+
+    }
+    public function update ( Requests\StorePostRequest $request ,$id)
+    {
+        
+        $discussion = Discussion::findOrFail($id);
+        $discussion->update($request->all());
+        return redirect()->action('PostController@show',['id'=>$discussion->id]);
     }
     public function store(Requests\StorePostRequest $request)
     {

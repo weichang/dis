@@ -11,9 +11,12 @@
                         @endforeach
                     </ul>
                 @endif
-             {!! Form::open(['url'=>'/discussions']) !!}
-               @include('forum.form')
-             {!! Form::close() !!}
+                {!! Form::model($discussion,['method'=>'PATCH','url'=>'/discussions/'.$discussion->id]) !!}
+                    @include('forum.form')
+                <div>
+                    {!! Form::submit('更新文章',['class'=>'btn btn-primary pull-right']) !!}
+                </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
