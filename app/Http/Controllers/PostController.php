@@ -39,7 +39,7 @@ class PostController extends Controller
     public function edit($id)
     {
         $discussion = Discussion::findOrFail($id);
-        if(\Auth::user()->id !== $discussion->user_id){
+        if(\Auth::user()->id != $discussion->user_id){
             return redirect('/');
         }
         return view('forum.edit',compact('discussion'));
