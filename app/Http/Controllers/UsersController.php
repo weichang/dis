@@ -93,16 +93,34 @@ class UsersController extends Controller
         $filename= \Auth::user()->id.'_'.time().$file->getClientOriginalName();
         $file->move($uploadPath,$filename);
         Image::make($uploadPath.$filename)->fit(200)->save();
-        $user = User::find(\Auth::user()->id);
+
+       /* $user = User::find(\Auth::user()->id);
         $user->avatar = '/'.$uploadPath.$filename;
-        $user->save();
+        $user->save();*/
 
 
         return \Response::json([
             'success' => true,
-            'avatar' => asset($uploadPath.$filename)
+            'avatar' => '/'.$uploadPath.$filename
         ]);
         //return redirect('/users/avatar');
+    }
+
+    public function cropAvatar(Request $request)
+    {
+
+        $photo = mb_substr($request->get('photo'), 1);
+        $w = (int) $request->get('w');
+        $h = (int) $request->get('h');
+        $y = (int) $request->get('y');
+        $x = (int) $request->get('x');
+
+        Image::make($photo)->crop($w,$h,$y,$x)->save();
+
+        $user = User::find(\Auth::user()->id);
+        $user->avatar = $request->get('photo');
+        $user->save();
+        return redirect('users/avatar');
     }
 
     public function signin(Requests\UserLoginRequest $request)

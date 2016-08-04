@@ -23,3 +23,4 @@ Route::get('/users/login','UsersController@login');
 Route::get('/users/logout','UsersController@logout');
 Route::post('/users/login','UsersController@signin');
 Route::post('/avatar','UsersController@changeAvatar');
+Route::post('/crop/api','UsersController@cropAvatar');
