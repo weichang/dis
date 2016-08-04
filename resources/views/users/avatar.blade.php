@@ -86,7 +86,7 @@
                 } else {
                     var cropBox = $("#cropbox");
                     cropBox.attr('src',response.avatar);
-                    $('#photo').val(response.avatar);
+                    $('#photo').val(response.image);
                     $('#upload-avatar').html('更換新頭像');
                     $('#exampleModal').modal('show');
                     cropBox.Jcrop({

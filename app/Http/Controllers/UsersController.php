@@ -101,7 +101,8 @@ class UsersController extends Controller
 
         return \Response::json([
             'success' => true,
-            'avatar' => '/'.$uploadPath.$filename
+            'avatar' =>asset($uploadPath.$filename),
+            'image' =>$uploadPath.$filename
         ]);
         //return redirect('/users/avatar');
     }
@@ -109,7 +110,7 @@ class UsersController extends Controller
     public function cropAvatar(Request $request)
     {
 
-        $photo = mb_substr($request->get('photo'), 1);
+        $photo = $request->get('photo');
         $w = (int) $request->get('w');
         $h = (int) $request->get('h');
         $y = (int) $request->get('y');
@@ -118,7 +119,7 @@ class UsersController extends Controller
         Image::make($photo)->crop($w,$h,$y,$x)->save();
 
         $user = User::find(\Auth::user()->id);
-        $user->avatar = $request->get('photo');
+        $user->avatar = '/'.$photo;
         $user->save();
         return redirect('users/avatar');
     }
