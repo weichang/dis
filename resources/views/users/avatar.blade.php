@@ -3,13 +3,59 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <div class="text-center"></div>
-                <img src="{{ Auth::user()->avatar }}" width="120" class="img-circle" alt="">
-                {!! Form::open( ['url'=>'/avatar','files'=> true]) !!}
-                {!! Form::file('avatar') !!}
-                {!! Form::submit('上傳頭像',['class'=>'btn btn-primary pull-right']) !!}
-                {!! Form::close() !!}
-            </div>
+                <div class="text-center">
+                    <div id="validation-errors"></div>
+                    <img src="{{Auth::user()->avatar}}" width="120" class="img-circle" id="user-avatar" alt="">
+                    {!! Form::open(['url'=>'/avatar','files'=>true,'id'=>'avatar']) !!}
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success avatar-button" id="upload-avatar">上傳大頭貼</button>
+                    </div>
+                    {!! Form::file('avatar',['class'=>'avatar','id'=>'image']) !!}
+
+                    {!! Form::close() !!}
+                    <div class="span5">
+                        <div id="output" style="display:none">
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
+        <script>
+            $(document).ready(function() {
+                var options = {
+                    beforeSubmit:  showRequest,
+                    success:       showResponse,
+                    dataType: 'json'
+                };
+                $('#image').on('change', function(){
+                    $('#upload-avatar').html('正在上傳...');
+                    $('#avatar').ajaxForm(options).submit();
+
+                });
+            });
+            function showRequest() {
+                $("#validation-errors").hide().empty();
+                $("#output").css('display','none');
+                return true;
+            }
+
+            function showResponse(response)  {
+                if(response.success == false)
+                {
+                    var responseErrors = response.errors;
+                    $.each(responseErrors, function(index, value)
+                    {
+                        if (value.length != 0)
+                        {
+                            $("#validation-errors").append('<div class="alert alert-error"><strong>'+ value +'</strong><div>');
+                        }
+                    });
+                    $("#validation-errors").show();
+                } else {
+                    $('#user-avatar').attr('src',response.avatar);
+                    $('#upload-avatar').html('更換新的大頭貼');
+                }
+            }
+        </script>
 @stop
+

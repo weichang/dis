@@ -72,8 +72,23 @@ class UsersController extends Controller
     }
     public function changeAvatar(Request $request)
     {
+        //取得圖片資訊
         $file = $request->file('avatar');
+        //驗證
+        $input = array('image' => $file);
+        $rules = array(
+            'image' => 'image'
+        );
+        $validator = \Validator::make($input, $rules);
+        if ( $validator->fails() ) {
+            return \Response::json([
+                'success' => false,
+                'errors' => $validator->getMessageBag()->toArray()
+            ]);
 
+        }
+
+        //上傳更新
         $uploadPath = 'uploads/';
         $filename= \Auth::user()->id.'_'.time().$file->getClientOriginalName();
         $file->move($uploadPath,$filename);
@@ -81,7 +96,13 @@ class UsersController extends Controller
         $user = User::find(\Auth::user()->id);
         $user->avatar = '/'.$uploadPath.$filename;
         $user->save();
-        return redirect('/users/avatar');
+
+
+        return \Response::json([
+            'success' => true,
+            'avatar' => asset($uploadPath.$filename)
+        ]);
+        //return redirect('/users/avatar');
     }
 
     public function signin(Requests\UserLoginRequest $request)
