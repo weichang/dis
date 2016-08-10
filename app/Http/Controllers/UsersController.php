@@ -6,9 +6,19 @@ use App\Http\Requests;
 use App\User;
 use Mail;
 use Image;
+use App\Services\EmailService;
+
 class UsersController extends Controller
 {
     //
+
+    protected $emailService;
+
+    public function __construct(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
+    }
+
     public function register()
     {
 
@@ -24,9 +34,9 @@ class UsersController extends Controller
             'avatar'       => '/images/default-avatar-catty.jpg'
         ];
         $user = User::create(array_merge($request->all(), $data));
-        $subject = "論壇EMAIL確認信!!";
-        $view = 'email.register';
-        $this->sendTo($user, $subject, $view, $data);
+
+        //$this->sendTo($user, $subject, $view, $data);
+        $this->emailService->send($user, $data);
         return redirect('/');
 
     }
