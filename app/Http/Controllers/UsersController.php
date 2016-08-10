@@ -7,72 +7,65 @@ use App\User;
 use Mail;
 use Image;
 use App\Services\EmailService;
+use App\Repositories\UserRepository;
 
 class UsersController extends Controller
 {
-    //
 
     protected $emailService;
+    protected $userRepository;
 
-    public function __construct(EmailService $emailService)
+    public function __construct(EmailService $emailService , UserRepository $userRepository)
     {
         $this->emailService = $emailService;
+        $this->userRepository = $userRepository;
     }
 
     public function register()
     {
-
         return view('users.register');
-
     }
-
+    //新增註冊帳號
     public function store(Requests\UserRegisterRequest $request)
     {
-        //dd($request->all());
+
         $data = [
             'confirm_code' => str_random(48),
             'avatar'       => '/images/default-avatar-catty.jpg'
         ];
-        $user = User::create(array_merge($request->all(), $data));
+        
+        $data=array_merge($request->all(), $data);
 
-        //$this->sendTo($user, $subject, $view, $data);
+        $user=$this->userRepository->addUser($data);
+
         $this->emailService->send($user, $data);
         return redirect('/');
 
     }
 
-    public function confirmEmail($confirm_code)
-    {
-
-        $user = User::where('confirm_code', $confirm_code)->first();
-        if (is_null($user)) {
-            return redirect('/');
-        }
-        $user->is_confirmed = 1;
-        $user->confirm_code = str_random(45);
-        $user->save();
-        return redirect('users/login');
-    }
-
-    private function sendTo($user, $subject, $view, $data)
-    {
-        Mail::queue($view, $data, function ($message) use ($user, $subject) {
-
-            $message->to($user->email)->subject($subject);
-        });
-    }
-
+    //登入
     public function login()
     {
-
         return view('users.login');
-
     }
 
+    //登出
     public function logout()
     {
         \Auth::logout();
         return redirect('/');
+    }
+
+    //使用者點回確認
+    public function confirmEmail($confirm_code)
+    {
+        $user = $this->userRepository->confirm_email($confirm_code);
+
+        if ($user) {
+            return redirect('users/login');
+        }else{
+            return redirect('/');
+        }
     }
 
     public function avatar()
